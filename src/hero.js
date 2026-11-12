@@ -11,9 +11,9 @@ export const heroMarkup=()=>`<section class="product-hero" aria-label="Мета�
       </div>
     </div>
     <div class="product-hero-copy">
-      <p class="product-hero-kicker">МЕТАЛЛОПТ · МОСКВА</p>
+      <p class="product-hero-kicker">МЕТАЛЛОПТ МСК</p>
       <h1>Металлопрокат<br>под ваш заказ</h1>
-      <p class="product-hero-description">Трубы, балки и арматура.<br>Подберём размер и рассчитаем стоимость.</p>
+      <p class="product-hero-description">Трубы, балки и арматура<br>Подберём размер и рассчитаем стоимость</p>
       <div class="product-hero-actions"><button type="button" data-request>Заказать</button><a href="/catalog/">Перейти в каталог</a></div>
     </div>
   </div>
@@ -24,7 +24,7 @@ export function mountHero(){
   const stage=document.querySelector('[data-steel-stage]');
   if(!stage)return ()=>{};
   let cancelled=false,dispose;
-  import('./steel-scene.js?v=4b9cb99b602b').then(({createSteelScene})=>{
+  import('./steel-scene.js?v=a0c155b53faf').then(({createSteelScene})=>{
     if(!cancelled)dispose=createSteelScene(stage);
   }).catch(()=>{
     if(!cancelled)stage.querySelector('.stage-loading').textContent='3D-просмотр недоступен. Товары доступны в каталоге.';
