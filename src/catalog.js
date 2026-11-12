@@ -1,5 +1,5 @@
-import {categories,products} from './catalog-data.js?v=e34d904eedeb';
-import icons from './icons.js?v=e34d904eedeb';
+import {categories,products} from './catalog-data.js?v=cd05f001ecbe';
+import icons from './icons.js?v=cd05f001ecbe';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 const byId=new Map(products.map(p=>[p.id,p]));
