@@ -8,4 +8,27 @@
 .catalog-product .row-select{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1}.row-select input{width:22px;height:22px;cursor:pointer;accent-color:var(--accent)}.is-grid .row-select{top:10px;left:10px;background:var(--panel);border-radius:8px}.is-grid .product-image{height:190px;background:#fff;border-radius:8px;overflow:hidden}.is-grid .product-image img{width:100%;height:100%;object-fit:contain}.catalog-product h3.product-name{margin:0;font-weight:600;font-size:15px;line-height:1.5}.product-stock{display:inline-flex;align-items:center;gap:7px}.product-stock::before{content:"";width:7px;height:7px;border-radius:50%;background:#9ea3a6;flex-shrink:0}.product-stock.in_stock::before{background:#2b9c67}.product-stock.on_order::before{background:#d39a30}.product-stock.out_of_stock::before{background:#c90000}.quantity button{min-width:44px;height:44px}.quantity input[type=number]{min-height:44px;font-size:15px}.quantity span{font-size:12px}.is-grid .product-order{display:flex;flex-direction:column}.is-grid .product-price small{display:block;margin:4px 0 0;font-size:12px}.catalog-product{grid-template-columns:44px 78px minmax(120px,1fr) 130px 180px}.is-grid .catalog-product{border-radius:10px}.is-grid{gap:16px}.cart-summary{top:calc(var(--header-height,100px) + 16px)}
 @media(max-width:1200px){.catalog-product{grid-template-columns:44px 60px minmax(100px,1fr) 130px}}
 @media(max-width:600px){.catalog-product{grid-template-columns:44px 56px minmax(0,1fr)}.is-grid .product-image{height:190px}.is-grid .product-props{display:grid;grid-template-columns:1fr 1fr}.is-grid .product-order .quantity{width:100%}.is-grid .product-order .button{min-height:46px}}
-.catalog-page .row-select input[type=checkbox]{width:22px;height:22px;appearance:auto}.catalog-product:has(.row-select input:checked){border-color:var(--accent)}.row-select:has(input:checked){outline:2px solid var(--accent);outline-offset:-2px}
+.catalog-page .row-select input[type=checkbox]{width:22px;height:22px;appearance:auto}
+
+/* Quiet checkboxes, with a focus ring only for keyboard navigation. */
+.catalog-page input[type=checkbox]:focus:not(:focus-visible){outline:none;box-shadow:none}
+.catalog-product .row-select{padding:0;background:none;border-radius:0}
+.catalog-page input[type=checkbox]:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.view-switch button{display:grid;place-items:center;width:42px;height:42px}
+.view-switch svg{width:22px;height:22px}
+.catalog-choice{min-width:0;display:flex;flex-direction:column;gap:6px}
+.choice-label{font-size:11px;color:var(--muted)}
+.catalog-sort{margin-left:auto;width:230px;max-width:100%}
+.catalog-dropdown{position:relative;color:var(--text);font-size:13px}
+.catalog-dropdown summary{display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none;cursor:pointer;border:1px solid var(--line);border-radius:4px;padding:11px 12px;min-height:44px;background:var(--page)}
+.catalog-dropdown summary::-webkit-details-marker{display:none}
+.catalog-dropdown summary>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.catalog-dropdown summary svg{width:16px;height:16px;flex-shrink:0;transition:transform .18s}
+.catalog-dropdown[open]{z-index:15}
+.catalog-dropdown[open] summary svg{transform:rotate(180deg)}
+.choice-options{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:15;padding:5px;background:var(--page);border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 24px #0002;max-height:260px;overflow-y:auto;overscroll-behavior:contain}
+.choice-options button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:44px;padding:10px 9px;text-align:left;color:var(--text);background:none;font:inherit;border-radius:3px}
+.choice-options button:hover,.choice-options button:focus-visible{background:var(--panel)}
+.choice-options button[aria-pressed=true]{color:var(--accent)}
+.catalog-dropdown summary:focus-visible,.choice-options button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media(max-width:600px){.catalog-toolbar{flex-wrap:wrap;gap:12px}.catalog-toolbar>span{flex-basis:100%}.catalog-sort{margin-left:0;flex:1;width:auto}.catalog-toolbar .view-switch{flex-shrink:0}.stock-filter{min-height:44px}}

@@ -20,6 +20,6 @@ form[name=request] [hidden]{display:none!important}
 form[name=request] .file-status:not(:empty){margin-top:10px}
 form[name=request] .consent input{margin-top:2px}
 form[name=request] .form-status.error{color:var(--field-error)}
-form[name=request] .order-note{font-size:13px;color:var(--muted);margin:0 0 20px}
+form[name=request] .order-note{font-size:13px;font-weight:600;color:var(--accent);margin:0 0 20px}
 form[name=request] .button:disabled{opacity:.55;cursor:wait}
 @media(max-width:600px){form[name=request] .form-row{grid-template-columns:1fr;gap:0}form[name=request] .button[type=submit]{width:100%}}
