@@ -1,0 +1,25 @@
+form[name=request]{--field-error:#b90000}
+[data-theme=dark] form[name=request]{--field-error:#ff8585}
+form[name=request] .request-field{min-width:0;margin-bottom:22px}
+form[name=request] .request-field label{margin-bottom:0}
+form[name=request] .field-feedback{display:flex;align-items:start;justify-content:space-between;gap:12px}
+form[name=request] .field-error{display:block;color:var(--field-error);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+form[name=request] .field-error:not(:empty){margin-top:6px}
+form[name=request] .field-count{flex:none;margin-top:6px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;margin-left:auto}
+form[name=request] [aria-invalid=true]:not([type=file]){border-color:var(--field-error)!important}
+form[name=request] [aria-invalid=true]:focus{box-shadow:0 1px 0 var(--field-error)}
+form[name=request] .file-heading{display:block;font-size:13px;margin-bottom:10px}
+form[name=request] .file-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+form[name=request] .file-picker{position:relative;display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:10px 14px;transition:border-color .2s,background .2s}
+form[name=request] .file-picker:hover{background:var(--panel);border-color:var(--muted)}
+form[name=request] .file-picker:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+form[name=request] .file-picker input[type=file]{position:absolute;inset:0;opacity:0;width:100%;height:100%;padding:0;cursor:pointer}
+form[name=request] .file-picker svg{width:18px;height:18px}
+form[name=request] .file-remove{background:none;border:0;padding:8px 0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline}
+form[name=request] [hidden]{display:none!important}
+form[name=request] .file-status:not(:empty){margin-top:10px}
+form[name=request] .consent input{margin-top:2px}
+form[name=request] .form-status.error{color:var(--field-error)}
+form[name=request] .order-note{font-size:13px;color:var(--muted);margin:0 0 20px}
+form[name=request] .button:disabled{opacity:.55;cursor:wait}
+@media(max-width:600px){form[name=request] .form-row{grid-template-columns:1fr;gap:0}form[name=request] .button[type=submit]{width:100%}}

@@ -1,0 +1,188 @@
+:root {
+    --policy-accent: #FC403A;
+}
+
+
+.modal-body__policy {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin: 8px 0 0;
+    font-size: 12px;
+    line-height: 16px;
+    color: #6d6d6d;
+    text-align: left;
+}
+
+.modal-body__policy>span {
+    flex: 1 1 auto;
+}
+
+.modal-body__policy input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: -2px 0 0;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1.5px solid #BABABA;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color .2s ease-in-out, background-color .2s ease-in-out;
+}
+
+.modal-body__policy input[type="checkbox"]:hover {
+    border-color: var(--policy-accent);
+}
+
+.modal-body__policy input[type="checkbox"]:checked {
+    border-color: var(--policy-accent);
+    background-color: var(--policy-accent);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 10' fill='none'%3E%3Cpath d='M1 5l4 4L13 1' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 10px;
+}
+
+.modal-body__policy a.txt--clr1,
+.modal-body__policy a.txt--clr1:hover {
+    color: var(--policy-accent);
+}
+
+/* ошибка валидации */
+.modal-body__policy.policy--error,
+.modal-body__policy.policy--error a.txt--clr1 {
+    color: #ED3A3A;
+}
+
+.modal-body__policy.policy--error input[type="checkbox"] {
+    border-color: #ED3A3A;
+}
+
+.step-two .modal__body {
+    display: flex;
+    flex-direction: column;
+}
+
+.step-two .modal__body>form {
+    flex: 1 1 auto;
+}
+
+.recolor-page .offer__form {
+    background-color: white;
+    border-radius: 8px
+}
+
+.offer .form-inp {
+    background-color: #F4F5F5
+}
+
+.recolor-page .inp {
+    color: #7F858B
+}
+
+.offer .form-inp .inp-placeholder,
+.offer .form-inp .inp-placeholder:after {
+    color: #7F858B
+}
+
+.inp-file {
+    border: 1px dashed #D4D6D8
+}
+
+.inp-file span {
+    color: #545D65
+}
+
+.offer__form hr {
+    margin-left: -32px;
+    margin-right: -32px;
+}
+
+
+.product-details__fast-order-form {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "inp btn"
+        "pol pol";
+    gap: 8px;
+    width: 100%;
+}
+
+.product-details__fast-order-form .form-inp {
+    grid-area: inp;
+    min-width: 0;
+}
+
+.product-details__fast-order-form .submit-btn {
+    grid-area: btn;
+}
+
+.product-details__fast-order-form .flex-col {
+    grid-area: pol;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 0;
+}
+
+.product-details__fast-order-form .flex-col .modal-body__policy {
+    margin: 0 !important;
+}
+
+.checkbox-container {
+    margin-bottom: 16px
+}
+
+.form-notification {
+    display: none;
+}
+
+.form-modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-modal form .checkbox-container {
+    margin-bottom: 16px;
+}
+
+.form-modal form .accent-btn.submit-btn {
+    margin-top: auto;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.cart-form .checkbox-container {
+    margin-top: 8px;
+}
+
+.cart-modal .cart-form fieldset {
+    gap: 16px;
+}
+
+.cookie-btn__wrapper {
+    display: flex;
+    flex-direction: row;
+    gap:8px;
+}
+
+.cookie-popup .cookie-btn--accept {
+    background-color: #FC403A;
+    border-color: #FC403A;
+    color: #fff;
+    font-size: 13px;
+    font-family: var(--font-family);
+}
+
+.cookie-popup .cookie-btn--accept:hover,
+.cookie-popup .cookie-btn--accept:focus-visible {
+    background-color: #E03232;
+    border-color: #E03232;
+    color: #fff;
+    font-size: 13px;
+}
+
