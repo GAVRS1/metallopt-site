@@ -1,4 +1,4 @@
-import {regions,cities} from './map-data.js?v=c75ec00833e9';
+import {regions,cities} from './map-data.js?v=2b5b5cb81cb0';
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=t=>t*t*(3-2*t);

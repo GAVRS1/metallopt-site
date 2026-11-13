@@ -1,12 +1,12 @@
-import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=c75ec00833e9';
-import {lookupCity} from './city-location.js?v=c75ec00833e9';
-import {mapMarkup,mountMap} from './delivery-map.js?v=c75ec00833e9';
-import {mountForms} from './forms.js?v=c75ec00833e9';
-import {heroMarkup,mountHero} from './hero.js?v=c75ec00833e9';
-import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems} from './catalog.js?v=c75ec00833e9';
-import sections from './sections.js?v=c75ec00833e9';
-import {mountMotion,toggleAccordion} from './motion.js?v=c75ec00833e9';
-import icons from './icons.js?v=c75ec00833e9';
+import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=2b5b5cb81cb0';
+import {lookupCity} from './city-location.js?v=2b5b5cb81cb0';
+import {mapMarkup,mountMap} from './delivery-map.js?v=2b5b5cb81cb0';
+import {mountForms} from './forms.js?v=2b5b5cb81cb0';
+import {heroMarkup,mountHero} from './hero.js?v=2b5b5cb81cb0';
+import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems,clearCart} from './catalog.js?v=2b5b5cb81cb0';
+import sections from './sections.js?v=2b5b5cb81cb0';
+import {mountMotion,toggleAccordion} from './motion.js?v=2b5b5cb81cb0';
+import icons from './icons.js?v=2b5b5cb81cb0';
 const icon=name=>icons[name]||'';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -41,7 +41,7 @@ function applyCity(value){currentCity=value;$$('[data-city-label]').forEach(x=>x
 const cities=['Москва','Санкт-Петербург','Сочи','Астрахань','Казань','Екатеринбург','Новосибирск','Нижний Новгород','Самара','Краснодар','Челябинск','Ростов-на-Дону','Красноярск','Уфа','Пермь','Тюмень','Воронеж','Омск','Хабаровск','Владивосток'];
 function cityModal(){modal('Город для заявки',`<input id="city-query" type="search" aria-label="Город" placeholder="Москва" maxlength="80" autocomplete="address-level2"><div class="city-grid"></div>`);const draw=q=>{const value=q.trim().replace(/\s+/g,' ');const found=cities.filter(x=>x.toLowerCase().replaceAll('ё','е').includes(value.toLowerCase().replaceAll('ё','е')));$('.city-grid',dialog).innerHTML=found.map(x=>`<button data-city="${esc(x)}">${esc(x)}</button>`).join('')+(value&&!cities.some(x=>x.toLowerCase()===value.toLowerCase())?`<button data-city="${esc(value)}">Выбрать «${esc(value)}»</button>`:'');};draw('');$('#city-query').oninput=e=>draw(e.target.value);}
 async function detectCity(){const city=await lookupCity();if(city&&!manualCity)applyCity(city);}
-function initForms(root){mountForms(root,()=>currentCity,cartItems);}
+function initForms(root){mountForms(root,()=>currentCity,cartItems,clearCart);}
 function blankContent(root){
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];let node;
  while(node=walker.nextNode()){

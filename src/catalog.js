@@ -1,7 +1,7 @@
-import {filterProducts} from './catalog-filter.js?v=c75ec00833e9';
-export {filterProducts} from './catalog-filter.js?v=c75ec00833e9';
-import {categories,products,loadCatalog} from './catalog-data.js?v=c75ec00833e9';
-import icons from './icons.js?v=c75ec00833e9';
+import {filterProducts} from './catalog-filter.js?v=2b5b5cb81cb0';
+export {filterProducts} from './catalog-filter.js?v=2b5b5cb81cb0';
+import {categories,products,loadCatalog} from './catalog-data.js?v=2b5b5cb81cb0';
+import icons from './icons.js?v=2b5b5cb81cb0';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 let byId=new Map();
@@ -35,6 +35,11 @@ function results(){let filtered=filterProducts(rows(),filters),pages=Math.max(1,
 function draw(){const c=current();root.innerHTML=`<div class="catalog-heading"><div><h1>${esc(c?.name||'Каталог металлопроката')}</h1></div><a href="/cart/" class="catalog-cart">${icons['shopping-cart']} Корзина <b>${Object.keys(cart).length}</b></a></div><div class="catalog-layout-new">${nav()}<div class="catalog-content">${c&&categories.some(d=>d.parent===c.id)?`<div class="catalog-subcategories">${categories.filter(d=>d.parent===c.id).map(d=>`<a href="${url(d.id)}">${esc(d.name)}<span>${count(d.id)}</span></a>`).join('')}</div>`:''}${filterPanel()}<div id="catalog-results">${results()}</div></div></div><div class="catalog-toast" role="status" aria-live="polite"></div>`;}
 function updateResults(){root.querySelector('#catalog-results').innerHTML=results();}
 function add(id,n=1){cart[id]=qty((cart[id]||0)+qty(n));save();const b=root.querySelector('.catalog-cart b');if(b)b.textContent=Object.keys(cart).length;const t=root.querySelector('.catalog-toast');if(t){t.textContent='Товар добавлен в корзину';t.classList.add('visible');clearTimeout(t.timer);t.timer=setTimeout(()=>t.classList.remove('visible'),2200);}if(root.querySelector('#catalog-results'))updateResults();}
+export function clearCart(){
+ cart={};selected.clear();save();
+ document.querySelectorAll('.order-note').forEach(note=>note.hidden=true);
+ if(root?.isConnected){if(location.pathname.startsWith('/cart'))drawCart();else if(root.querySelector('#catalog-results'))draw();}
+}
 export function cartItems(){return Object.entries(cart).map(([id,quantity])=>({id,quantity}));}
 export function cartSummary(){return 'ТОВАРЫ ИЗ КОРЗИНЫ\n'+Object.entries(cart).map(([id,n])=>{const p=byId.get(id);return `${p.name} — ${n} ${p.unit}; ${p.price===null?'цена по запросу':money(p.price*n)+' ₽'}`;}).join('\n');}
 function drawCart(){const entries=Object.entries(cart),total=entries.reduce((n,[id,q])=>n+(byId.get(id).price||0)*q,0),unknown=entries.some(([id])=>byId.get(id).price===null);root.innerHTML=`<div class="catalog-heading"><div><h1>Корзина</h1></div><a href="/catalog/" class="catalog-cart">Продолжить выбор ${icons['arrow-right']}</a></div>${entries.length?`<div class="cart-layout"><div class="cart-items">${entries.map(([id,n])=>{const p=byId.get(id);return `<article class="cart-row" data-product="${id}">${image(p)}<div><b>${esc(p.name)}</b><small>${price(p)}</small></div><label class="quantity"><button data-cart-step="-1" aria-label="Уменьшить количество">−</button><input data-cart-qty="${id}" aria-label="Количество: ${esc(p.name)}" type="number" min="1" max="99999" step="1" inputmode="numeric" value="${n}"><button data-cart-step="1" aria-label="Увеличить количество">+</button></label><strong>${p.price===null?'По запросу':money(p.price*n)+' ₽'}</strong><button class="cart-remove" data-remove="${id}" aria-label="Удалить ${esc(p.name)}">${icons.x}</button></article>`;}).join('')}</div><aside class="cart-summary"><h2>Ваш заказ</h2><p>Позиций: ${entries.length}</p><strong>${money(total)} ₽</strong>${unknown?'<p>Позиции «по запросу» в сумму не включены.</p>':''}<p>Пример расчёта</p><button class="button" data-cart-request>Сформировать заявку</button><button class="catalog-reset" data-clear-cart>Очистить корзину</button></aside></div>`:'<div class="catalog-no-results">Корзина пока пуста<a class="button" href="/catalog/">Перейти в каталог</a></div>'}`;}
