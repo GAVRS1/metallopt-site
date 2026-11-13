@@ -1,7 +1,7 @@
-import {filterProducts} from './catalog-filter.js?v=e19c74aa0cf4';
-export {filterProducts} from './catalog-filter.js?v=e19c74aa0cf4';
-import {categories,products,loadCatalog} from './catalog-data.js?v=e19c74aa0cf4';
-import icons from './icons.js?v=e19c74aa0cf4';
+import {filterProducts} from './catalog-filter.js?v=af381703b531';
+export {filterProducts} from './catalog-filter.js?v=af381703b531';
+import {categories,products,loadCatalog} from './catalog-data.js?v=af381703b531';
+import icons from './icons.js?v=af381703b531';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 let byId=new Map();
