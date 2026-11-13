@@ -1,12 +1,12 @@
-import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=9035179f2751';
-import {lookupCity} from './city-location.js?v=9035179f2751';
-import {mapMarkup,mountMap} from './delivery-map.js?v=9035179f2751';
-import {mountForms} from './forms.js?v=9035179f2751';
-import {heroMarkup,mountHero} from './hero.js?v=9035179f2751';
-import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems} from './catalog.js?v=9035179f2751';
-import sections from './sections.js?v=9035179f2751';
-import {mountMotion,toggleAccordion} from './motion.js?v=9035179f2751';
-import icons from './icons.js?v=9035179f2751';
+import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=e19c74aa0cf4';
+import {lookupCity} from './city-location.js?v=e19c74aa0cf4';
+import {mapMarkup,mountMap} from './delivery-map.js?v=e19c74aa0cf4';
+import {mountForms} from './forms.js?v=e19c74aa0cf4';
+import {heroMarkup,mountHero} from './hero.js?v=e19c74aa0cf4';
+import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems} from './catalog.js?v=e19c74aa0cf4';
+import sections from './sections.js?v=e19c74aa0cf4';
+import {mountMotion,toggleAccordion} from './motion.js?v=e19c74aa0cf4';
+import icons from './icons.js?v=e19c74aa0cf4';
 const icon=name=>icons[name]||'';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -45,7 +45,7 @@ function initForms(root){mountForms(root,()=>currentCity,cartItems);}
 function blankContent(root){
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];let node;
  while(node=walker.nextNode()){
-  const el=node.parentElement;if(!node.textContent.trim()||el.closest('form,button,svg,script,.blank-copy,.product-hero,.delivery-map,.our-services,.home-info'))continue;
+  const el=node.parentElement;if(!node.textContent.trim()||el.closest('form,button,svg,script,.blank-copy,.product-hero,.delivery-map,.our-services,.home-info,.contact-details'))continue;
   const link=el.closest('a');
   if(link&&!link.querySelector('h3'))continue;
   if(link&&el.closest('[class*=link],[class*=btn]'))continue;
