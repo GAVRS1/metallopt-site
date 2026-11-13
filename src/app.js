@@ -1,12 +1,12 @@
-import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=f46049cfcba3';
-import {lookupCity} from './city-location.js?v=f46049cfcba3';
-import {mapMarkup,mountMap} from './delivery-map.js?v=f46049cfcba3';
-import {mountForms} from './forms.js?v=f46049cfcba3';
-import {heroMarkup,mountHero} from './hero.js?v=f46049cfcba3';
-import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems,clearCart} from './catalog.js?v=f46049cfcba3';
-import sections from './sections.js?v=f46049cfcba3';
-import {mountMotion,toggleAccordion} from './motion.js?v=f46049cfcba3';
-import icons from './icons.js?v=f46049cfcba3';
+import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=236204022785';
+import {lookupCity} from './city-location.js?v=236204022785';
+import {mapMarkup,mountMap} from './delivery-map.js?v=236204022785';
+import {mountForms} from './forms.js?v=236204022785';
+import {heroMarkup,mountHero} from './hero.js?v=236204022785';
+import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems,clearCart} from './catalog.js?v=236204022785';
+import sections from './sections.js?v=236204022785';
+import {mountMotion,toggleAccordion} from './motion.js?v=236204022785';
+import icons from './icons.js?v=236204022785';
 const icon=name=>icons[name]||'';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -26,7 +26,6 @@ const serviceCards=[["01-rolling", "Вальцовка металла", "Вал�
 const services=()=>`<section id="services" class="our-services shell"><header class="our-services__heading"><h2>Услуги металлообработки</h2><button class="button" data-request>Обсудить задачу</button></header><div class="our-services__grid">${serviceCards.map(([key,title,copy])=>`<article class="service-card"><div class="service-card__icon"><img class="service-light" src="/assets/service-icons/light/${key}.gif" width="96" height="96" alt="" loading="lazy"><img class="service-dark" src="/assets/service-icons/dark/${key}.gif" width="96" height="96" alt="" loading="lazy"></div><div><h3>${title}</h3><p>${copy}</p><button class="service-card__request" data-request>Оставить заявку</button></div></article>`).join('')}</div></section>`;
 const about=()=>section('main-about').replace('<section ', '<section id="about" ');
 const geography=mapMarkup;
-const projects=()=>section('comp-projects');
 const reviews=()=>section('reviews').replace('<section ', '<section id="reviews" ');
 const faq=()=>section('faq');
 const consultation=(id='contact')=>section('consultation').replace('<section ', '<section id="'+id+'" ');
@@ -34,7 +33,7 @@ const page=(title,body)=>`<section class="page-heading shell"><a href="/">Гла
 const homeInfo=()=>`<section class="home-info shell"><article id="delivery"><h2>Доставка</h2><p>Согласуем адрес, объём груза и сроки доставки. Способ перевозки подбирается под размеры и вес заказа.</p></article><article id="payment"><h2>Оплата</h2><p>Стоимость и условия оплаты согласуем перед оформлением заказа и зафиксируем в счёте.</p></article></section>`;
 const sectionRoute=path=>path.replace(/\/$/,'')==='/reviews'?'contact':path.startsWith('/services')?'services':({'/about':'about','/contact':'contact','/delivery-and-payment':'geography','/payment':'contact'})[path.replace(/\/$/,'')];
 function scrollSection(id){requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}
-function render(){const destination=sectionRoute(location.pathname);if(destination)history.replaceState({},'','/#'+destination);disposeHero();disposeMap();const path=location.pathname.replace(/\/$/,'')||'/';dialog.close();if(path==='/')main.innerHTML=hero()+services()+geography()+about()+projects()+consultation();else if(path.startsWith('/catalog'))main.innerHTML=catalogPage();else if(path==='/cart')main.innerHTML=cartPage();else if(path==='/privacy')main.innerHTML=page('Политика конфиденциальности',privacyMarkup());else if(path==='/sitemap')main.innerHTML=page('Карта сайта',sitemapMarkup());else if(path==='/thanks')main.innerHTML=page('Спасибо за обращение',`<section class="shell section"><h2>Заявка отправлена</h2><p>Мы получили ваше сообщение</p><a class="button" href="/">На главную</a></section>`);else main.innerHTML=page('Страница не найдена','<section class="shell section"><a class="button" href="/">На главную</a></section>');init();disposeHero=mountHero();disposeMap=mountMap();applySeo(path);if(location.hash)scrollSection(decodeURIComponent(location.hash.slice(1)));}
+function render(){const destination=sectionRoute(location.pathname);if(destination)history.replaceState({},'','/#'+destination);disposeHero();disposeMap();const path=location.pathname.replace(/\/$/,'')||'/';dialog.close();if(path==='/')main.innerHTML=hero()+services()+geography()+about()+consultation();else if(path.startsWith('/catalog'))main.innerHTML=catalogPage();else if(path==='/cart')main.innerHTML=cartPage();else if(path==='/privacy')main.innerHTML=page('Политика конфиденциальности',privacyMarkup());else if(path==='/sitemap')main.innerHTML=page('Карта сайта',sitemapMarkup());else if(path==='/thanks')main.innerHTML=page('Спасибо за обращение',`<section class="shell section"><h2>Заявка отправлена</h2><p>Мы получили ваше сообщение</p><a class="button" href="/">На главную</a></section>`);else main.innerHTML=page('Страница не найдена','<section class="shell section"><a class="button" href="/">На главную</a></section>');init();disposeHero=mountHero();disposeMap=mountMap();applySeo(path);if(location.hash)scrollSection(decodeURIComponent(location.hash.slice(1)));}
 function navigate(href){const url=new URL(href,location.origin);const id=sectionRoute(url.pathname)||url.hash.slice(1);if(url.hash&&url.pathname===location.pathname&&!sectionRoute(url.pathname)&&location.pathname!=='/'){history.pushState({},'',url.pathname+url.hash);dialog.close();scrollSection(url.hash.slice(1));return;}if(id){const onHome=location.pathname==='/';history.pushState({},'','/#'+id);dialog.close();if(!onHome)render();else scrollSection(id);return;}history.pushState({},'',href);render();window.scrollTo({top:0,behavior:'instant'});}
 function modal(title,body){opener=document.activeElement;dialog.innerHTML=`<button class="dialog-close" aria-label="Закрыть окно">${icon('x')}</button><h2>${esc(title)}</h2>${body}`;dialog.setAttribute('aria-label',title);dialog.showModal();initForms(dialog);$$('[data-icon]',dialog).forEach(e=>e.innerHTML=icon(e.dataset.icon));}
 function applyCity(value){currentCity=value;$$('[data-city-label]').forEach(x=>x.textContent=value||'Выбрать город');$$('input[name=city]').forEach(x=>{if(!x.dataset.edited)x.value=value;});}
@@ -45,7 +44,7 @@ function initForms(root){mountForms(root,()=>currentCity,cartItems,clearCart);}
 function blankContent(root){
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];let node;
  while(node=walker.nextNode()){
-  const el=node.parentElement;if(!node.textContent.trim()||el.closest('form,button,svg,script,.blank-copy,.product-hero,.delivery-map,.our-services,.home-info,.contact-details'))continue;
+  const el=node.parentElement;if(!node.textContent.trim()||el.closest('form,button,svg,script,.blank-copy,.product-hero,.delivery-map,.our-services,.home-info,.contact-details,.company-about'))continue;
   const link=el.closest('a');
   if(link&&!link.querySelector('h3'))continue;
   if(link&&el.closest('[class*=link],[class*=btn]'))continue;

@@ -1,4 +1,4 @@
-import {categories as initialCategories} from './catalog-categories.js?v=f46049cfcba3';
+import {categories as initialCategories} from './catalog-categories.js?v=236204022785';
 export let categories=initialCategories;
 export let products=[];
 const project='hh8uv5g8',dataset='production';
