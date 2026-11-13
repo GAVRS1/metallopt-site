@@ -7,3 +7,10 @@
 @media(prefers-reduced-motion:reduce){.product-hero *{transition:none!important}}
 
 [data-theme=dark] .stage-controls button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.steel-photo-frame{position:absolute;inset:24px;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .55s ease,transform .65s ease,visibility .55s;pointer-events:none}
+.steel-photo-frame.is-active{opacity:1;visibility:visible;transform:translateY(0)}
+.steel-photo-frame img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;animation:steel-photo-drift 7s ease-in-out infinite;animation-play-state:paused}
+.steel-photo-frame.is-active img{animation-play-state:running}
+.steel-photo-stage.is-paused img{animation-play-state:paused}
+@keyframes steel-photo-drift{0%,100%{transform:translateY(5px) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
+@media(prefers-reduced-motion:reduce){.steel-photo-frame img{animation:none}.steel-photo-frame{transition:none}}
