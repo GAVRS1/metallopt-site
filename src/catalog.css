@@ -49,3 +49,8 @@
 .cart-summary .button{margin:16px 0 14px}
 @media(max-width:900px){.cart-layout{grid-template-columns:1fr;gap:20px}.cart-summary{position:static}}
 @media(max-width:600px){.cart-items{padding:0 16px}.cart-items .cart-row{grid-template-columns:52px minmax(0,1fr) 24px;gap:12px}.cart-items .cart-row>img{width:52px;height:52px;grid-row:1}.cart-items .cart-row>div{grid-row:1}.cart-items .cart-row .quantity{grid-column:2;grid-row:2;width:100%;max-width:180px}.cart-items .cart-row>strong{grid-column:2;grid-row:3;text-align:left}.cart-items .cart-remove{grid-column:3;grid-row:1}.cart-summary{padding:16px}}
+/* Warehouse photos fill the card to its top edge; text keeps its own inset. */
+.catalog-product .product-image{padding:0;border:0;background:var(--panel)}
+.catalog-product .product-image img,.is-grid .product-image img{display:block;object-fit:cover}
+.is-grid .catalog-product{overflow:hidden}
+.is-grid .catalog-product .product-image{align-self:stretch;width:auto;height:auto;aspect-ratio:4/3;margin:-18px -18px 0;border-radius:0;background:var(--panel)}
