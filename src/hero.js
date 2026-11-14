@@ -4,11 +4,6 @@ export const heroMarkup=()=>`<section class="product-hero" aria-label="Мета�
       <div class="steel-stage" data-steel-stage aria-label="Интерактивная 3D-модель металлопроката">
         <div class="stage-loading" role="status">Загружаем 3D-модель…</div>
       </div>
-      <div class="stage-controls" aria-label="Выбрать образец">
-        <button type="button" data-steel="0" aria-pressed="true">Труба</button>
-        <button type="button" data-steel="1" aria-pressed="false">Балка</button>
-        <button type="button" data-steel="2" aria-pressed="false">Арматура</button>
-      </div>
     </div>
     <div class="product-hero-copy">
       <p class="product-hero-kicker">МЕТАЛЛОПТ МСК</p>
@@ -24,7 +19,7 @@ export function mountHero(){
   const stage=document.querySelector('[data-steel-stage]');
   if(!stage)return ()=>{};
   let cancelled=false,dispose;
-  import('./steel-scene.js?v=84147f85beac').then(({createSteelScene})=>{
+  import('./steel-scene.js?v=43124e31c2e7').then(({createSteelScene})=>{
     if(!cancelled)dispose=createSteelScene(stage);
   }).catch(()=>{
     if(!cancelled)stage.querySelector('.stage-loading').textContent='3D-просмотр недоступен. Товары доступны в каталоге.';
