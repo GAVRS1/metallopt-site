@@ -73,7 +73,9 @@ h1,h2,h3{letter-spacing:-.025em}h1,h2{font-weight:650}.catalog-heading h1{font-w
 @media(pointer:coarse){button,a,summary{-webkit-tap-highlight-color:transparent}}
 @media(max-width:760px){
  .our-services__heading [data-request]{display:none}
- #site-dialog .mobile-links a[href="/catalog/"]{background:var(--accent);color:white;border-radius:8px;padding:13px 16px;font-weight:700}
+ #site-dialog .mobile-links{gap:8px}
+ #site-dialog .mobile-links a{display:flex;align-items:center;box-sizing:border-box;min-height:48px;padding:12px 16px;border:1px solid var(--line);border-radius:8px;background:var(--page);color:var(--text);font-weight:700}
+ #site-dialog .mobile-links a[href="/catalog/"]{background:var(--accent);border-color:var(--accent);color:white}
  .site-footer__top .footer-public-contacts{display:flex;flex-flow:row nowrap;align-items:center;gap:4px;justify-content:space-between}
  .site-footer__top .footer-public-contacts a{min-width:0;min-height:44px;gap:0}
  .footer-public-contacts .contact-symbol,.footer-public-contacts .contact-copy small{display:none}

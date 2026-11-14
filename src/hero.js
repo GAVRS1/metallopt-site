@@ -19,7 +19,7 @@ export function mountHero(){
   const stage=document.querySelector('[data-steel-stage]');
   if(!stage)return ()=>{};
   let cancelled=false,dispose;
-  import('./steel-scene.js?v=858d412bede6').then(({createSteelScene})=>{
+  import('./steel-scene.js?v=7c168cfbaa2b').then(({createSteelScene})=>{
     if(!cancelled)dispose=createSteelScene(stage);
   }).catch(()=>{
     if(!cancelled)stage.querySelector('.stage-loading').textContent='3D-просмотр недоступен. Товары доступны в каталоге.';

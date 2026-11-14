@@ -82,11 +82,11 @@
  .product-list:not(.is-grid) .product-order{grid-area:actions;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
  .product-list:not(.is-grid) .product-props{margin-top:10px;gap:7px 14px}
 }
-.catalog-page .add-product:disabled {
+.catalog-page .add-product[aria-pressed="true"] {
   background: var(--panel);
   color: var(--muted);
   border: 1px solid var(--line);
-  cursor: default;
+  cursor: pointer;
 }
 .cart-items .cart-row { grid-template-columns: clamp(100px,10vw,144px) minmax(0,1fr) 132px 32px; }
 .cart-photo { grid-column:1; grid-row:1/3; padding:0; overflow:hidden; border-radius:6px; aspect-ratio:1; cursor:zoom-in; }

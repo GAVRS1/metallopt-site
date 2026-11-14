@@ -1,4 +1,4 @@
-import {categories} from './catalog-categories.js?v=858d412bede6';
+import {categories} from './catalog-categories.js?v=7c168cfbaa2b';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
