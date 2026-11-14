@@ -1,4 +1,5 @@
-import {categories} from './catalog-categories.js?v=2380aebe9621';
+import {blogEntries} from './blog-index.js?v=180305820a46';
+import {categories} from './catalog-categories.js?v=180305820a46';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
@@ -36,7 +37,12 @@ export function productSchema(product) {
   url:siteOrigin+productPath(product),image:product.image,
   additionalProperty:Object.entries(product.props).map(([name,value])=>({'@type':'PropertyValue',name,value}))};
 }
-export function pageMeta(path){path=path==='/'?'/':path.replace(/\/$/,'')+'/';if(path===articlePath)return {path,title:articleTitle+' | МеталлОпт МСК',description:'Методы гибки квадратной трубы, выбор трубогиба, сравнение способов и контроль качества изгиба.',url:siteOrigin+path,indexable:true};const category=categories.find(c=>path==='/catalog/'+c.id+'/');const titles={'/':'Металлопрокат оптом в Москве с доставкой | МеталлОпт МСК','/catalog/':'Каталог металлопроката: ассортимент и цены | МеталлОпт МСК','/privacy/':'Политика конфиденциальности | МеталлОпт МСК','/sitemap/':'Карта сайта | МеталлОпт МСК','/cart/':'Корзина | МеталлОпт МСК','/thanks/':'Заявка отправлена | МеталлОпт МСК'};const title=category?catalogCopyFor(category)[0]+' — цены в Москве | МеталлОпт МСК':titles[path]||'Страница не найдена | МеталлОпт МСК';const description=category?catalogCopyFor(category)[1]:path==='/catalog/'?catalogCopyFor(null)[1]:path==='/privacy/'?'Обработка заявок, хранение корзины, настройки cookies и конфиденциальность на metalloptmsk.ru.':path==='/sitemap/'?'Разделы сайта и категории каталога МеталлОпт МСК.':'Оптовые поставки металлопроката в Москве и Московской области. Арматура, стальные трубы, листы и балки. Рассчитаем заказ с металлообработкой и доставкой по России.';return {path,title,description,url:siteOrigin+path,indexable:!!category||['/','/catalog/','/privacy/','/sitemap/'].includes(path)};}
+export function pageMeta(path){path=path==='/'?'/':path.replace(/\/$/,'')+'/';const entry=blogEntries.find(item=>item.path===path);
+if(entry||path==='/articles/'){
+ const title=entry?.title||'Статьи о металлопрокате';
+ return {path,title:title+' | МеталлОпт МСК',description:entry?.title||'Материалы о выборе и обработке металлопроката.',url:siteOrigin+path,indexable:true};
+}
+const category=categories.find(c=>path==='/catalog/'+c.id+'/');const titles={'/':'Металлопрокат оптом в Москве с доставкой | МеталлОпт МСК','/catalog/':'Каталог металлопроката: ассортимент и цены | МеталлОпт МСК','/privacy/':'Политика конфиденциальности | МеталлОпт МСК','/sitemap/':'Карта сайта | МеталлОпт МСК','/cart/':'Корзина | МеталлОпт МСК','/thanks/':'Заявка отправлена | МеталлОпт МСК'};const title=category?catalogCopyFor(category)[0]+' — цены в Москве | МеталлОпт МСК':titles[path]||'Страница не найдена | МеталлОпт МСК';const description=category?catalogCopyFor(category)[1]:path==='/catalog/'?catalogCopyFor(null)[1]:path==='/privacy/'?'Обработка заявок, хранение корзины, настройки cookies и конфиденциальность на metalloptmsk.ru.':path==='/sitemap/'?'Разделы сайта и категории каталога МеталлОпт МСК.':'Оптовые поставки металлопроката в Москве и Московской области. Арматура, стальные трубы, листы и балки. Рассчитаем заказ с металлообработкой и доставкой по России.';return {path,title,description,url:siteOrigin+path,indexable:!!category||['/','/catalog/','/privacy/','/sitemap/'].includes(path)};}
 export function structuredData(meta){const home=siteOrigin+'/';if(meta.path==='/')return {'@context':'https://schema.org','@graph':[{'@type':'WebSite',name:'МеталлОпт МСК',url:home,inLanguage:'ru-RU'},{'@type':'Organization',name:'МеталлОпт МСК',legalName:'ООО «ИТ ВЕКТОР»',url:home,email:'metall.optmsk@yandex.ru',telephone:'+79035817142'}]};
 const crumbs=[['Главная',home]];
 if(meta.path.startsWith('/catalog/')){crumbs.push(['Каталог металлопроката',home+'catalog/']);for(const c of categories.filter(c=>meta.path.startsWith('/catalog/'+c.id+'/')))crumbs.push([c.name,home+'catalog/'+c.id+'/']);}
@@ -121,6 +127,8 @@ export const privacyMarkup=()=>`<section class="shell section prose privacy-docu
 export const cookieSettingsMarkup=allowed=>`<div class="cookie-choices"><button class="cookie-choice" data-cookie-choice="yes" aria-pressed="${allowed===true}">Разрешить</button><button class="cookie-choice" data-cookie-choice="no" aria-pressed="${allowed===false}">Запретить</button></div>`;
 
 export const articlePath = '/articles/gibka-kvadratnoy-truby/';
-const articleTitle = "Трубогиб для квадратной профильной трубы: как согнуть без деформации";
-const articlePhoto = '/assets/articles/gibka/cover.png';
-export const articlesMarkup = () => `<section id="articles" class="home-articles shell"><h2>Статьи</h2><a class="article-tile" href="${articlePath}"><img src="${articlePhoto}" alt="" loading="lazy" width="600" height="300"><h3>${articleTitle}</h3></a></section>`;
+function articleCards(entries){
+ return entries.map(item=>`<a class="article-tile" href="${escapeHtml(item.path)}">${item.image?`<img src="${escapeHtml(item.image)}" alt="" loading="lazy" width="600" height="300">`:''}<h3>${escapeHtml(item.title)}</h3></a>`).join('');
+}
+export const articlesMarkup=()=>`<section id="articles" class="home-articles shell"><header class="articles-heading"><h2>Статьи</h2><a href="/articles/">Все статьи →</a></header><div class="articles-grid">${articleCards(blogEntries.slice(0,3))}</div></section>`;
+export const articleIndexMarkup=()=>`<section class="home-articles shell article-index"><h1>Статьи о металлопрокате</h1><div class="articles-grid">${articleCards(blogEntries)}</div></section>`;
