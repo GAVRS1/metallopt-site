@@ -1,11 +1,12 @@
 export const heroMarkup=()=>`<section class="product-hero" aria-label="Металлопрокат под заказ">
   <div class="product-hero-inner">
     <div class="product-showcase">
-      <div class="steel-stage" data-steel-stage aria-label="Анимированные изображения металлопроката">
-        <div class="stage-loading" role="status">Загружаем изображение…</div>
+      <div class="steel-stage" data-steel-stage aria-label="Интерактивная 3D-модель металлопроката">
+        <div class="stage-loading" role="status">Загружаем 3D-модель…</div>
       </div>
       <div class="stage-controls" aria-label="Выбрать образец">
         <button type="button" data-steel="0" aria-pressed="true">Труба</button>
+        <button type="button" data-steel="1" aria-pressed="false">Балка</button>
         <button type="button" data-steel="2" aria-pressed="false">Арматура</button>
       </div>
     </div>
@@ -23,10 +24,10 @@ export function mountHero(){
   const stage=document.querySelector('[data-steel-stage]');
   if(!stage)return ()=>{};
   let cancelled=false,dispose;
-  import('./steel-photo.js?v=c4ebbe273fa3').then(({createSteelPhoto})=>{
-    if(!cancelled)dispose=createSteelPhoto(stage);
+  import('./steel-scene.js?v=6bbf7dee75bc').then(({createSteelScene})=>{
+    if(!cancelled)dispose=createSteelScene(stage);
   }).catch(()=>{
-    if(!cancelled)stage.querySelector('.stage-loading').textContent='Изображение недоступно. Товары доступны в каталоге.';
+    if(!cancelled)stage.querySelector('.stage-loading').textContent='3D-просмотр недоступен. Товары доступны в каталоге.';
   });
   return ()=>{cancelled=true;dispose?.();};
 }
