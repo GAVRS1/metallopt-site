@@ -1,5 +1,5 @@
-import {blogEntries} from './blog-index.js?v=4dc4693357ec';
-import {categories} from './catalog-categories.js?v=4dc4693357ec';
+import {blogEntries} from './blog-index.js?v=aa162b052c8a';
+import {categories} from './catalog-categories.js?v=aa162b052c8a';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
@@ -49,7 +49,7 @@ if(meta.path.startsWith('/catalog/')){crumbs.push(['Каталог металл�
 else crumbs.push([meta.title.split(' | ')[0],meta.url]);
 return {'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:crumbs.map(([name,item],i)=>({'@type':'ListItem',position:i+1,name,item}))};}
 export function applySeo(path){const m=pageMeta(path);document.title=m.title;const ld=document.head.querySelector('script[type="application/ld+json"]');if(ld)ld.textContent=JSON.stringify(structuredData(m));const set=(selector,tag,attrs)=>{let el=document.head.querySelector(selector);if(!el){el=document.createElement(tag);document.head.append(el);}for(const [k,v]of Object.entries(attrs))el.setAttribute(k,v);};set('meta[name=description]','meta',{name:'description',content:m.description});set('meta[name=robots]','meta',{name:'robots',content:m.indexable?'index,follow':'noindex,follow'});set('link[rel=canonical]','link',{rel:'canonical',href:m.url});for(const [name,content]of Object.entries({title:m.title,description:m.description,url:m.url,type:'website',site_name:'МеталлОпт МСК',locale:'ru_RU'}))set('meta[property="og:'+name+'"]','meta',{property:'og:'+name,content});}
-export const sitemapMarkup=()=>`<section class="shell section prose site-map"><h2>Разделы</h2><ul>${[['/','Главная'],['/catalog/','Каталог'],['/#services','Услуги'],['/#geography','Доставка'],['/#about','О компании'],['/#contact','Контакты'],['/privacy/','Политика конфиденциальности']].map(([u,n])=>`<li><a href="${u}">${n}</a></li>`).join('')}</ul><h2>Категории каталога</h2><ul>${categories.filter(c=>!c.parent).map(c=>`<li><a href="/catalog/${c.id}/">${escapeHtml(c.name)}</a><ul>${categories.filter(d=>d.parent===c.id).map(d=>`<li><a href="/catalog/${d.id}/">${escapeHtml(d.name)}</a></li>`).join('')}</ul></li>`).join('')}</ul><p><a href="/sitemap.xml">XML-карта для поисковых систем</a></p></section>`;
+export const sitemapMarkup=()=>`<section class="shell section prose site-map"><h2>Разделы</h2><ul>${[['/','Главная'],['/catalog/','Каталог'],['/#services','Услуги'],['/#geography','Доставка'],['/#articles','Статьи'],['/#about','О компании'],['/#contact','Контакты'],['/privacy/','Политика конфиденциальности']].map(([u,n])=>`<li><a href="${u}">${n}</a></li>`).join('')}</ul><h2>Категории каталога</h2><ul>${categories.filter(c=>!c.parent).map(c=>`<li><a href="/catalog/${c.id}/">${escapeHtml(c.name)}</a><ul>${categories.filter(d=>d.parent===c.id).map(d=>`<li><a href="/catalog/${d.id}/">${escapeHtml(d.name)}</a></li>`).join('')}</ul></li>`).join('')}</ul><p><a href="/sitemap.xml">XML-карта для поисковых систем</a></p></section>`;
 export const privacyMarkup=()=>`<section class="shell section prose privacy-document">
 <p class="privacy-edition">Политика в отношении обработки персональных данных<br>Редакция от 13 ноября 2026 года</p>
 <h2>1. Общие положения</h2>

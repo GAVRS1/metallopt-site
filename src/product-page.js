@@ -1,5 +1,5 @@
-import icons from './icons.js?v=4dc4693357ec';
-import {escapeHtml as esc,relatedProductsMarkup} from './site-pages.js?v=4dc4693357ec';
+import icons from './icons.js?v=aa162b052c8a';
+import {escapeHtml as esc,relatedProductsMarkup} from './site-pages.js?v=aa162b052c8a';
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 const unitLabel=u=>({'т':'тонну','шт':'штуку','м':'метр','м²':'м²','кг':'кг','лист':'лист','рулон':'рулон'}[u]||u);
 export const price=p=>p.price===null?'По запросу':`${money(p.price)} ₽ <small>за ${esc(unitLabel(p.unit))}</small>`;
