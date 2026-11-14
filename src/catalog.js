@@ -1,8 +1,9 @@
-import {relatedProductsMarkup,catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=d913865cc360';
-import {filterProducts} from './catalog-filter.js?v=d913865cc360';
-export {filterProducts} from './catalog-filter.js?v=d913865cc360';
-import {categories,products,loadCatalog} from './catalog-data.js?v=d913865cc360';
-import icons from './icons.js?v=d913865cc360';
+import {price,props,image,productOrder,singleProductBody,productPageMarkup} from './product-page.js?v=1ef904fd0bfd';
+import {catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=1ef904fd0bfd';
+import {filterProducts} from './catalog-filter.js?v=1ef904fd0bfd';
+export {filterProducts} from './catalog-filter.js?v=1ef904fd0bfd';
+import {categories,products,loadCatalog} from './catalog-data.js?v=1ef904fd0bfd';
+import icons from './icons.js?v=1ef904fd0bfd';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 let byId=new Map();
@@ -17,10 +18,6 @@ const current=()=>categories.find(c=>c.id===category());
 const rows=()=>products.filter(p=>inCategory(p,category()));
 function save(){try{localStorage.setItem('metall-cart-v1',JSON.stringify(cart));}catch{}updateCartBadges();}
 export function updateCartBadges(){document.querySelectorAll('[data-cart]').forEach(b=>{let badge=b.querySelector('.cart-count');if(!badge){badge=document.createElement('span');badge.className='cart-count';b.append(badge);}badge.textContent=Object.keys(cart).length;badge.hidden=!Object.keys(cart).length;});}
-const unitLabel=u=>({'т':'тонну','шт':'штуку','м':'метр','м²':'м²','кг':'кг','лист':'лист','рулон':'рулон'}[u]||u);
-const price=p=>p.price===null?'По запросу':`${money(p.price)} ₽ <small>за ${esc(unitLabel(p.unit))}</small>`;
-function props(p){return Object.entries(p.props).map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');}
-const image=p=>`<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" width="90" height="90">`;
 export function catalogPage(){return '<section class="catalog-page"><div class="catalog-breadcrumb"><a href="/">Главная</a><span>/</span><a href="/catalog/">Каталог</a></div><div id="catalog-app"></div></section>';}
 export function cartPage(){return '<section class="catalog-page"><div class="catalog-breadcrumb"><a href="/">Главная</a><span>/</span><a href="/catalog/">Каталог</a><span>/ Корзина</span></div><div id="catalog-app"></div></section>';}
 function nav(){const id=category();return `<aside class="catalog-nav"><details ${innerWidth>900?'open':''}><summary>Категории ${icons['chevron-down']}</summary><nav aria-label="Категории товаров"><a class="${!id?'active':''}" href="/catalog/">Все товары <span>${products.length}</span></a>${categories.filter(c=>!c.parent).map(c=>{let children=categories.filter(d=>d.parent===c.id);return `<div class="category-group"><a class="${id===c.id?'active':''}" href="${url(c.id)}">${esc(c.name)}<span>${count(c.id)}</span></a>${children.length?`<details ${id.startsWith(c.id)?'open':''}><summary aria-label="Подкатегории: ${esc(c.name)}">${icons['chevron-down']}</summary><div>${children.map(d=>`<a class="sub ${id===d.id?'active':''}" href="${url(d.id)}">${esc(d.name)}<span>${count(d.id)}</span></a>`).join('')}</div></details>`:''}</div>`;}).join('')}</nav></details></aside>`;}
@@ -31,13 +28,11 @@ const viewIcon=kind=>kind==='grid'?'<svg viewBox="0 0 24 24" fill="none" stroke=
 document.addEventListener('click',e=>{document.querySelectorAll('.catalog-dropdown[open]').forEach(d=>{if(!d.contains(e.target))d.open=false;});});
 document.addEventListener('keydown',e=>{const d=e.target.closest('.catalog-dropdown');if(!d)return;const buttons=[...d.querySelectorAll('[data-choice-value]')],i=buttons.indexOf(e.target);if(e.key==='Escape'){e.preventDefault();d.open=false;d.querySelector('summary').focus();}else if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){e.preventDefault();d.open=true;const next=e.key==='Home'?0:e.key==='End'?buttons.length-1:e.key==='ArrowDown'?(i+1)%buttons.length:(i<0?buttons.length-1:(i-1+buttons.length)%buttons.length);buttons[next]?.focus();}});
 function filterPanel(){const source=rows();const keys=[...new Set(source.flatMap(p=>Object.keys(p.props)))];return `<div class="catalog-filters"><label class="catalog-search">Поиск по товарам<input type="search" data-filter="q" value="${esc(filters.q||'')}" placeholder="Название, размер, марка стали"></label><label>Цена от, ₽<input type="number" min="0" data-filter="min" value="${esc(filters.min||'')}" placeholder="От"></label><label>Цена до, ₽<input type="number" min="0" data-filter="max" value="${esc(filters.max||'')}" placeholder="До"></label>${keys.map(k=>select(k,k,[...new Set(source.map(p=>p.props[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru',{numeric:true})))).join('')}<label class="stock-filter"><input type="checkbox" data-filter="stock" ${filters.stock?'checked':''}>В наличии</label><button class="catalog-reset" data-reset>Сбросить фильтры</button></div>`;}
-function productOrder(p){return `<div class="product-order"><label class="quantity"><button data-step="-1" aria-label="Уменьшить количество">−</button><input type="number" min="1" max="99999" step="1" inputmode="numeric" value="${cart[p.id]||1}" aria-label="Количество: ${esc(p.name)}"><button data-step="1" aria-label="Увеличить количество">+</button></label><button class="button add-product" data-add="${p.id}" aria-pressed="${Boolean(cart[p.id])}" title="${cart[p.id]?'Убрать из корзины':'Добавить в корзину'}">${icons['shopping-cart']} ${cart[p.id]?'В корзине':'В корзину'}</button></div>`;}
-function productRow(p){return `<article class="catalog-product" data-product="${p.id}"><label class="row-select"><input type="checkbox" data-cart-toggle="${p.id}" ${cart[p.id]?'checked':''} aria-label="${cart[p.id]?'Убрать':'Добавить'} ${esc(p.name)} ${cart[p.id]?'из корзины':'в корзину'}"></label><button type="button" class="product-image" data-photo="${esc(p.id)}" aria-label="Увеличить фото: ${esc(p.name)}">${image(p)}</button><div class="product-info"><h3 class="product-name"><a href="${productPath(p)}">${esc(p.name)}</a></h3><span class="product-stock ${p.status}">${({in_stock:'В наличии',on_order:'Под заказ',out_of_stock:'Нет в наличии'})[p.status]}</span><dl class="product-props">${props(p)}</dl></div><div class="product-price">${price(p)}</div>${productOrder(p)}</article>`;}
+function productRow(p){return `<article class="catalog-product" data-product="${p.id}"><label class="row-select"><input type="checkbox" data-cart-toggle="${p.id}" ${cart[p.id]?'checked':''} aria-label="${cart[p.id]?'Убрать':'Добавить'} ${esc(p.name)} ${cart[p.id]?'из корзины':'в корзину'}"></label><button type="button" class="product-image" data-photo="${esc(p.id)}" aria-label="Увеличить фото: ${esc(p.name)}">${image(p)}</button><div class="product-info"><h3 class="product-name"><a href="${productPath(p)}">${esc(p.name)}</a></h3><span class="product-stock ${p.status}">${({in_stock:'В наличии',on_order:'Под заказ',out_of_stock:'Нет в наличии'})[p.status]}</span><dl class="product-props">${props(p)}</dl></div><div class="product-price">${price(p)}</div>${productOrder(p,cart)}</article>`;}
 function results(){let filtered=filterProducts(rows(),filters),pages=Math.max(1,Math.ceil(filtered.length/12));pageNumber=Math.min(pageNumber,pages);let shown=filtered.slice((pageNumber-1)*12,pageNumber*12);return `<div class="catalog-toolbar"><span role="status">Найдено: <b>${filtered.length}</b></span>${dropdown('sort','Порядок сортировки',[['','По умолчанию'],['price-up','Цена: по возрастанию'],['price-down','Цена: по убыванию'],['name','По названию']])}<div class="view-switch"><button data-view="table" aria-pressed="${view==='table'}" aria-label="Показать списком">${viewIcon('table')}</button><button data-view="grid" aria-pressed="${view==='grid'}" aria-label="Показать карточками">${viewIcon('grid')}</button></div></div>${filtered.length?`<div class="product-list ${view==='grid'?'is-grid':''}">${shown.map(productRow).join('')}</div><nav class="catalog-pagination" aria-label="Страницы каталога">${Array.from({length:pages},(_,i)=>`<button data-page="${i+1}" aria-current="${pageNumber===i+1?'page':'false'}">${i+1}</button>`).join('')}</nav>`:'<div class="catalog-no-results">Товары не найдены<button data-reset>Сбросить фильтры</button></div>'}`;}
 function drawSingle(product){
  const categoryName=categories.find(c=>c.id===product.category)?.name||'Каталог';
- root.innerHTML=`<nav class="catalog-breadcrumb"><a href="/catalog/">Каталог</a> / <a href="${url(product.category)}">${esc(categoryName)}</a></nav><div id="catalog-results" class="sku-page"></div>${relatedProductsMarkup(product,products)}`;
- updateResults();
+ root.innerHTML=productPageMarkup(product,categoryName,products,cart);
  const track=root.querySelector('.related-grid');
  if(track){
   const controls=root.querySelector('.related-controls');
@@ -53,16 +48,9 @@ function drawSingle(product){
   observer.observe(track);sync();
  }
 }
-function singleProductBody(p){
- const stock={in_stock:'В наличии',on_order:'Под заказ',out_of_stock:'Нет в наличии'};
- return `<article class="sku-layout" data-product="${esc(p.id)}">
- <button type="button" class="sku-photo" data-photo="${esc(p.id)}" aria-label="Увеличить фотографию">${image(p)}</button>
- <div class="sku-details"><h1>${esc(p.name)}</h1><div class="sku-meta"><span>Артикул ${esc(p.sku)}</span><span class="product-stock ${p.status}">${stock[p.status]}</span></div>
- <dl class="sku-specs">${props(p)}</dl><div class="product-price">${price(p)}</div>${productOrder(p)}<a class="sku-cart-link" href="/cart/">Перейти в корзину</a></div></article>`;
-}
 function singleId(){return category().startsWith('item/')?category().slice(5):'';}
 function draw(){if(singleId())return drawSingle(byId.get(singleId()));const c=current();root.innerHTML=`<div class="catalog-heading"><div><h1>${esc(catalogCopyFor(c)[0])}</h1></div><a href="/cart/" class="catalog-cart">${icons['shopping-cart']} Корзина <b>${Object.keys(cart).length}</b></a></div><div class="catalog-layout-new">${nav()}<div class="catalog-content">${c&&categories.some(d=>d.parent===c.id)?`<div class="catalog-subcategories">${categories.filter(d=>d.parent===c.id).map(d=>`<a href="${url(d.id)}">${esc(d.name)}<span>${count(d.id)}</span></a>`).join('')}</div>`:''}${filterPanel()}<div id="catalog-results">${results()}</div></div></div><div class="catalog-toast" role="status" aria-live="polite"></div>`;}
-function updateResults(){root.querySelector('#catalog-results').innerHTML=singleId()?singleProductBody(byId.get(singleId())):results();}
+function updateResults(){root.querySelector('#catalog-results').innerHTML=singleId()?singleProductBody(byId.get(singleId()),cart):results();}
 function removeFromCatalog(id){
  delete cart[id];
  save();
