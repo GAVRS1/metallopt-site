@@ -1,4 +1,4 @@
-import {categories} from './catalog-categories.js?v=1ef904fd0bfd';
+import {categories} from './catalog-categories.js?v=cb729e825ce0';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
@@ -119,3 +119,12 @@ export const privacyMarkup=()=>`<section class="shell section prose privacy-docu
 <p class="privacy-law-link">Нормативный источник: <a href="https://www.consultant.ru/document/cons_doc_LAW_61801/" target="_blank" rel="noopener noreferrer">Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных»</a>.</p>
 </section>`;
 export const cookieSettingsMarkup=allowed=>`<div class="cookie-choices"><button class="cookie-choice" data-cookie-choice="yes" aria-pressed="${allowed===true}">Разрешить</button><button class="cookie-choice" data-cookie-choice="no" aria-pressed="${allowed===false}">Запретить</button></div>`;
+
+export const articlesMarkup = () => `<section id="articles" class="home-articles shell">
+<h2>Статьи</h2>
+<details><summary><span>Гибка квадратной трубы: что указать в заказе</span><span class="article-toggle" aria-hidden="true"></span></summary>
+<article><p>Если нужна дуга для каркаса, одного размера трубы недостаточно. Из профиля 40 × 40 мм можно сделать и пологую арку, и деталь с коротким крутым изгибом. Чтобы в цехе поняли задачу, приложите к заявке эскиз готовой детали.</p>
+<h3>Сечение и стенка</h3><p>Запишите наружный размер профиля и толщину стенки. Например, запись «40 × 40 × 2 мм» означает квадрат со стороной 40 мм и стенкой 2 мм. Добавьте марку стали, если она указана в проекте.</p>
+<h3>Форма изгиба</h3><p>Если на чертеже есть радиус, укажите, где он измерен: по внутренней стороне трубы, по наружной или по оси. Для арки без заданного радиуса отметьте расстояние между концами дуги и её высоту. Прямые участки на концах подпишите отдельно.</p>
+<h3>Что проверить при получении</h3><p>Сверьте деталь с эскизом или шаблоном. Проверьте расстояние между концами, высоту дуги и длину прямых участков. Осмотрите внутреннюю сторону изгиба на складки, а наружную на трещины. Допустимые отклонения лучше согласовать с исполнителем до начала работ.</p>
+<a href="/#contact">Обсудить гибку трубы</a></article></details></section>`;

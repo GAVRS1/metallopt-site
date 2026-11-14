@@ -1,12 +1,12 @@
-import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=1ef904fd0bfd';
-import {lookupCity} from './city-location.js?v=1ef904fd0bfd';
-import {mapMarkup,mountMap} from './delivery-map.js?v=1ef904fd0bfd';
-import {mountForms} from './forms.js?v=1ef904fd0bfd';
-import {heroMarkup,mountHero} from './hero.js?v=1ef904fd0bfd';
-import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems,clearCart} from './catalog.js?v=1ef904fd0bfd';
-import sections from './sections.js?v=1ef904fd0bfd';
-import {mountMotion,toggleAccordion} from './motion.js?v=1ef904fd0bfd';
-import icons from './icons.js?v=1ef904fd0bfd';
+import {articlesMarkup,applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=cb729e825ce0';
+import {lookupCity} from './city-location.js?v=cb729e825ce0';
+import {mapMarkup,mountMap} from './delivery-map.js?v=cb729e825ce0';
+import {mountForms} from './forms.js?v=cb729e825ce0';
+import {heroMarkup,mountHero} from './hero.js?v=cb729e825ce0';
+import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems,clearCart} from './catalog.js?v=cb729e825ce0';
+import sections from './sections.js?v=cb729e825ce0';
+import {mountMotion,toggleAccordion} from './motion.js?v=cb729e825ce0';
+import icons from './icons.js?v=cb729e825ce0';
 const icon=name=>icons[name]||'';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -54,7 +54,7 @@ const page=(title,body)=>`<section class="page-heading shell"><a href="/">Гла
 const homeInfo=()=>`<section class="home-info shell"><article id="delivery"><h2>Доставка</h2><p>Согласуем адрес, объём груза и сроки доставки. Способ перевозки подбирается под размеры и вес заказа.</p></article><article id="payment"><h2>Оплата</h2><p>Стоимость и условия оплаты согласуем перед оформлением заказа и зафиксируем в счёте.</p></article></section>`;
 const sectionRoute=path=>path.replace(/\/$/,'')==='/reviews'?'contact':path.startsWith('/services')?'services':({'/about':'about','/contact':'contact','/delivery-and-payment':'geography','/payment':'contact'})[path.replace(/\/$/,'')];
 function scrollSection(id){requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}
-function render(){trackPage();const destination=sectionRoute(location.pathname);if(destination)history.replaceState({},'','/#'+destination);disposeHero();disposeMap();const path=location.pathname.replace(/\/$/,'')||'/';dialog.close();if(path==='/')main.innerHTML=hero()+services()+geography()+about()+consultation();else if(path.startsWith('/catalog')){const initial=main.querySelector('[data-initial-catalog]');if(initial)initial.removeAttribute('data-initial-catalog');else main.innerHTML=catalogPage();}else if(path==='/cart')main.innerHTML=cartPage();else if(path==='/privacy')main.innerHTML=page('Политика конфиденциальности',privacyMarkup());else if(path==='/sitemap')main.innerHTML=page('Карта сайта',sitemapMarkup());else if(path==='/thanks')main.innerHTML=page('Спасибо за обращение',`<section class="shell section"><h2>Заявка отправлена</h2><p>Мы получили ваше сообщение</p><a class="button" href="/">На главную</a></section>`);else main.innerHTML=page('Страница не найдена','<section class="shell section"><a class="button" href="/">На главную</a></section>');init();disposeHero=mountHero();disposeMap=mountMap();if(!path.startsWith('/catalog/item/'))applySeo(path);if(location.hash)scrollSection(decodeURIComponent(location.hash.slice(1)));}
+function render(){trackPage();const destination=sectionRoute(location.pathname);if(destination)history.replaceState({},'','/#'+destination);disposeHero();disposeMap();const path=location.pathname.replace(/\/$/,'')||'/';dialog.close();if(path==='/')main.innerHTML=hero()+services()+geography()+about()+articlesMarkup()+consultation();else if(path.startsWith('/catalog')){const initial=main.querySelector('[data-initial-catalog]');if(initial)initial.removeAttribute('data-initial-catalog');else main.innerHTML=catalogPage();}else if(path==='/cart')main.innerHTML=cartPage();else if(path==='/privacy')main.innerHTML=page('Политика конфиденциальности',privacyMarkup());else if(path==='/sitemap')main.innerHTML=page('Карта сайта',sitemapMarkup());else if(path==='/thanks')main.innerHTML=page('Спасибо за обращение',`<section class="shell section"><h2>Заявка отправлена</h2><p>Мы получили ваше сообщение</p><a class="button" href="/">На главную</a></section>`);else main.innerHTML=page('Страница не найдена','<section class="shell section"><a class="button" href="/">На главную</a></section>');init();disposeHero=mountHero();disposeMap=mountMap();if(!path.startsWith('/catalog/item/'))applySeo(path);if(location.hash)scrollSection(decodeURIComponent(location.hash.slice(1)));}
 function navigate(href){const url=new URL(href,location.origin);const id=sectionRoute(url.pathname)||url.hash.slice(1);if(url.hash&&url.pathname===location.pathname&&!sectionRoute(url.pathname)&&location.pathname!=='/'){history.pushState({},'',url.pathname+url.hash);dialog.close();scrollSection(url.hash.slice(1));return;}if(id){const onHome=location.pathname==='/';history.pushState({},'','/#'+id);dialog.close();if(!onHome)render();else scrollSection(id);return;}history.pushState({},'',href);render();window.scrollTo({top:0,behavior:'instant'});}
 function modal(title,body){opener=document.activeElement;dialog.innerHTML=`<button class="dialog-close" aria-label="Закрыть окно">${icon('x')}</button><h2 tabindex="-1" autofocus>${esc(title)}</h2>${body}`;dialog.setAttribute('aria-label',title);if(!dialog.open)dialog.showModal();dialog.querySelector('h2').focus({preventScroll:true});initForms(dialog);$$('[data-icon]',dialog).forEach(e=>e.innerHTML=icon(e.dataset.icon));}
 function applyCity(value){currentCity=value;$$('[data-city-label]').forEach(x=>x.textContent=value||'Выбрать город');$$('input[name=city]').forEach(x=>{if(!x.dataset.edited)x.value=value;});}
@@ -65,7 +65,7 @@ function initForms(root){mountForms(root,()=>currentCity,cartItems,clearCart);}
 function blankContent(root){
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];let node;
  while(node=walker.nextNode()){
-  const el=node.parentElement;if(!node.textContent.trim()||el.closest('form,button,svg,script,.blank-copy,.product-hero,.delivery-map,.our-services,.home-info,.contact-details,.company-about'))continue;
+  const el=node.parentElement;if(!node.textContent.trim()||el.closest('form,button,svg,script,.blank-copy,.product-hero,.delivery-map,.our-services,.home-info,.contact-details,.company-about,.home-articles'))continue;
   const link=el.closest('a');
   if(link&&!link.querySelector('h3'))continue;
   if(link&&el.closest('[class*=link],[class*=btn]'))continue;
