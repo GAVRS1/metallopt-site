@@ -1,8 +1,8 @@
-import {catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=f7c46e1340ef';
-import {filterProducts} from './catalog-filter.js?v=f7c46e1340ef';
-export {filterProducts} from './catalog-filter.js?v=f7c46e1340ef';
-import {categories,products,loadCatalog} from './catalog-data.js?v=f7c46e1340ef';
-import icons from './icons.js?v=f7c46e1340ef';
+import {catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=401cc5c342de';
+import {filterProducts} from './catalog-filter.js?v=401cc5c342de';
+export {filterProducts} from './catalog-filter.js?v=401cc5c342de';
+import {categories,products,loadCatalog} from './catalog-data.js?v=401cc5c342de';
+import icons from './icons.js?v=401cc5c342de';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 let byId=new Map();

@@ -81,4 +81,4 @@ h1,h2,h3{letter-spacing:-.025em}h1,h2{font-weight:650}.catalog-heading h1{font-w
  .footer-public-contacts .contact-symbol,.footer-public-contacts .contact-copy small{display:none}
  .footer-public-contacts .contact-copy span{font-size:clamp(10px,2.8vw,13px);white-space:nowrap}
 }
-.site-footer__bottom .footer-notice{flex:1 1 36rem;min-width:0;line-height:1.55;white-space:normal}
+.site-footer__bottom .footer-notice{flex:0 1 auto;max-width:56rem;min-width:0;line-height:1.55;white-space:normal}
