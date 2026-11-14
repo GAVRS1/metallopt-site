@@ -1,8 +1,8 @@
-import {catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=401cc5c342de';
-import {filterProducts} from './catalog-filter.js?v=401cc5c342de';
-export {filterProducts} from './catalog-filter.js?v=401cc5c342de';
-import {categories,products,loadCatalog} from './catalog-data.js?v=401cc5c342de';
-import icons from './icons.js?v=401cc5c342de';
+import {relatedProductsMarkup,catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=d59ad2518c06';
+import {filterProducts} from './catalog-filter.js?v=d59ad2518c06';
+export {filterProducts} from './catalog-filter.js?v=d59ad2518c06';
+import {categories,products,loadCatalog} from './catalog-data.js?v=d59ad2518c06';
+import icons from './icons.js?v=d59ad2518c06';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 let byId=new Map();
@@ -35,7 +35,7 @@ function productRow(p){return `<article class="catalog-product" data-product="${
 function results(){let filtered=filterProducts(rows(),filters),pages=Math.max(1,Math.ceil(filtered.length/12));pageNumber=Math.min(pageNumber,pages);let shown=filtered.slice((pageNumber-1)*12,pageNumber*12);return `<div class="catalog-toolbar"><span role="status">Найдено: <b>${filtered.length}</b></span>${dropdown('sort','Порядок сортировки',[['','По умолчанию'],['price-up','Цена: по возрастанию'],['price-down','Цена: по убыванию'],['name','По названию']])}<div class="view-switch"><button data-view="table" aria-pressed="${view==='table'}" aria-label="Показать списком">${viewIcon('table')}</button><button data-view="grid" aria-pressed="${view==='grid'}" aria-label="Показать карточками">${viewIcon('grid')}</button></div></div>${filtered.length?`<div class="product-list ${view==='grid'?'is-grid':''}">${shown.map(productRow).join('')}</div><nav class="catalog-pagination" aria-label="Страницы каталога">${Array.from({length:pages},(_,i)=>`<button data-page="${i+1}" aria-current="${pageNumber===i+1?'page':'false'}">${i+1}</button>`).join('')}</nav>`:'<div class="catalog-no-results">Товары не найдены<button data-reset>Сбросить фильтры</button></div>'}`;}
 function drawSingle(product){
  const categoryName=categories.find(c=>c.id===product.category)?.name||'Каталог';
- root.innerHTML=`<nav class="catalog-breadcrumb"><a href="/catalog/">Каталог</a> / <a href="${url(product.category)}">${esc(categoryName)}</a></nav><h1>${esc(product.name)}</h1><p>Артикул ${esc(product.sku)}</p><div id="catalog-results" class="sku-page"></div><a class="catalog-cart" href="/cart/">Перейти в корзину</a>`;
+ root.innerHTML=`<nav class="catalog-breadcrumb"><a href="/catalog/">Каталог</a> / <a href="${url(product.category)}">${esc(categoryName)}</a></nav><header class="sku-heading"><h1>${esc(product.name)}</h1><p>Артикул ${esc(product.sku)}</p></header><div id="catalog-results" class="sku-page"></div><a class="catalog-cart" href="/cart/">Перейти в корзину</a>${relatedProductsMarkup(product,products)}`;
  updateResults();
 }
 function singleId(){return category().startsWith('item/')?category().slice(5):'';}

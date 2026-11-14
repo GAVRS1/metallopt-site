@@ -1,4 +1,4 @@
-import {categories} from './catalog-categories.js?v=401cc5c342de';
+import {categories} from './catalog-categories.js?v=d59ad2518c06';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
@@ -14,6 +14,17 @@ const catalogCopy={
 };
 export function catalogCopyFor(c){return c?(catalogCopy[c.id]||[c.name,c.name+': размеры, характеристики и цены для заказа с доставкой.']):['Каталог металлопроката','Арматура, трубы, стальной лист и фасонный прокат. Выберите размеры и отправьте заявку на расчёт поставки.'];}
 export const productPath = product => '/catalog/item/' + encodeURIComponent(product.id) + '/';
+export function relatedProductsMarkup(product, inventory) {
+ const family = product.category.split('/')[0];
+ const related = inventory.filter(item => item.id !== product.id && item.category.split('/')[0] === family)
+  .sort((a,b) => Number(b.category === product.category) - Number(a.category === product.category)).slice(0,4);
+ if (!related.length) return '';
+ const cards = related.map(item => {
+  const price = item.price === null ? 'Цена по запросу' : item.price.toLocaleString('ru-RU')+' ₽ / '+item.unit;
+  return `<a class="related-item" href="${productPath(item)}"><img loading="lazy" src="${escapeHtml(item.image)}" alt=""><span>${escapeHtml(item.name)}</span><strong>${escapeHtml(price)}</strong></a>`;
+ }).join('');
+ return `<section class="sku-related"><h2>Похожие товары</h2><div class="related-grid">${cards}</div></section>`;
+}
 export function productMeta(product) {
  const path = productPath(product);
  const details = Object.entries(product.props).map(([label,value]) => label + ': ' + value).join('; ');
