@@ -54,3 +54,10 @@
 .catalog-product .product-image img,.is-grid .product-image img{display:block;object-fit:cover}
 .is-grid .catalog-product{overflow:hidden}
 .is-grid .catalog-product .product-image{align-self:stretch;width:auto;height:auto;aspect-ratio:4/3;margin:-18px -18px 0;border-radius:0;background:var(--panel)}
+.catalog-product .product-image{cursor:zoom-in}
+#site-dialog:has(.catalog-zoom){width:min(900px,94vw)}
+.catalog-zoom{display:block;width:100%;max-height:68svh;object-fit:contain}
+@media(min-width:1201px){:not(.is-grid)>.catalog-product{grid-template-columns:44px 136px minmax(120px,1fr) 130px 180px}}
+@media(min-width:601px) and (max-width:1200px){:not(.is-grid)>.catalog-product{grid-template-columns:44px 104px minmax(100px,1fr) 130px}}
+@media(max-width:600px){:not(.is-grid)>.catalog-product{grid-template-columns:44px clamp(84px,24vw,118px) minmax(0,1fr)}}
+:not(.is-grid)>.catalog-product .product-image{width:100%;height:auto;aspect-ratio:1}

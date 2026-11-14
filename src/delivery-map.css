@@ -33,3 +33,10 @@
 
 @media(max-width:700px){.delivery-map{height:calc(85svh + 360px)}.delivery-map__stage{height:clamp(360px,calc(53vw + 160px),480px);min-height:0;padding:16px}.delivery-map__viewport{padding-top:20px;margin-bottom:0}.delivery-map__headline{margin:0!important}}
 @media(max-width:700px) and (prefers-reduced-motion:reduce){.delivery-map{height:auto}}
+.delivery-region-name{display:none}
+@media(pointer:coarse){
+ .delivery-region-name{display:block;min-height:1.5em;text-align:center;color:var(--text);font-weight:600}
+ .delivery-map:not(.is-ready).is-animated .delivery-regions{pointer-events:auto}
+ .delivery-map:not(.is-ready) .delivery-city{pointer-events:none}
+ .delivery-map__viewport,.delivery-map__svg,.delivery-map__svg *{-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+}
