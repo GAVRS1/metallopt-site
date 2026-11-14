@@ -1,4 +1,4 @@
-import {categories} from './catalog-categories.js?v=7c168cfbaa2b';
+import {categories} from './catalog-categories.js?v=0281a4e0e72f';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
@@ -13,6 +13,18 @@ const catalogCopy={
  truby_nerzhaveyushchie:['Нержавеющие трубы','Круглые и профильные трубы из нержавеющей стали. Сравните размеры, марку стали и обработку поверхности.']
 };
 export function catalogCopyFor(c){return c?(catalogCopy[c.id]||[c.name,c.name+': размеры, характеристики и цены для заказа с доставкой.']):['Каталог металлопроката','Арматура, трубы, стальной лист и фасонный прокат. Выберите размеры и отправьте заявку на расчёт поставки.'];}
+export const productPath = product => '/catalog/item/' + encodeURIComponent(product.id) + '/';
+export function productMeta(product) {
+ const path = productPath(product);
+ const details = Object.entries(product.props).map(([label,value]) => label + ': ' + value).join('; ');
+ return {path, url:siteOrigin+path, title:product.name+' | МеталлОпт МСК',
+  description:[product.name,details,'Артикул '+product.sku].filter(Boolean).join('. '), indexable:true};
+}
+export function productSchema(product) {
+ return {'@context':'https://schema.org','@type':'Product',name:product.name,sku:product.sku,
+  url:siteOrigin+productPath(product),image:product.image,
+  additionalProperty:Object.entries(product.props).map(([name,value])=>({'@type':'PropertyValue',name,value}))};
+}
 export function pageMeta(path){path=path==='/'?'/':path.replace(/\/$/,'')+'/';const category=categories.find(c=>path==='/catalog/'+c.id+'/');const titles={'/':'Металлопрокат оптом в Москве с доставкой | МеталлОпт МСК','/catalog/':'Каталог металлопроката: ассортимент и цены | МеталлОпт МСК','/privacy/':'Политика конфиденциальности | МеталлОпт МСК','/sitemap/':'Карта сайта | МеталлОпт МСК','/cart/':'Корзина | МеталлОпт МСК','/thanks/':'Заявка отправлена | МеталлОпт МСК'};const title=category?catalogCopyFor(category)[0]+' — цены в Москве | МеталлОпт МСК':titles[path]||'Страница не найдена | МеталлОпт МСК';const description=category?catalogCopyFor(category)[1]:path==='/catalog/'?catalogCopyFor(null)[1]:path==='/privacy/'?'Обработка заявок, хранение корзины, настройки cookies и конфиденциальность на metalloptmsk.ru.':path==='/sitemap/'?'Разделы сайта и категории каталога МеталлОпт МСК.':'Оптовые поставки металлопроката в Москве и Московской области. Арматура, стальные трубы, листы и балки. Рассчитаем заказ с металлообработкой и доставкой по России.';return {path,title,description,url:siteOrigin+path,indexable:!!category||['/','/catalog/','/privacy/','/sitemap/'].includes(path)};}
 export function structuredData(meta){const home=siteOrigin+'/';if(meta.path==='/')return {'@context':'https://schema.org','@graph':[{'@type':'WebSite',name:'МеталлОпт МСК',url:home,inLanguage:'ru-RU'},{'@type':'Organization',name:'МеталлОпт МСК',legalName:'ООО «ИТ ВЕКТОР»',url:home,email:'metall.optmsk@yandex.ru',telephone:'+79035817142'}]};
 const crumbs=[['Главная',home]];
