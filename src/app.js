@@ -1,12 +1,12 @@
-import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=c944de74cdc5';
-import {lookupCity} from './city-location.js?v=c944de74cdc5';
-import {mapMarkup,mountMap} from './delivery-map.js?v=c944de74cdc5';
-import {mountForms} from './forms.js?v=c944de74cdc5';
-import {heroMarkup,mountHero} from './hero.js?v=c944de74cdc5';
-import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems,clearCart} from './catalog.js?v=c944de74cdc5';
-import sections from './sections.js?v=c944de74cdc5';
-import {mountMotion,toggleAccordion} from './motion.js?v=c944de74cdc5';
-import icons from './icons.js?v=c944de74cdc5';
+import {applySeo,sitemapMarkup,privacyMarkup,cookieSettingsMarkup} from './site-pages.js?v=7ae7f98bbffe';
+import {lookupCity} from './city-location.js?v=7ae7f98bbffe';
+import {mapMarkup,mountMap} from './delivery-map.js?v=7ae7f98bbffe';
+import {mountForms} from './forms.js?v=7ae7f98bbffe';
+import {heroMarkup,mountHero} from './hero.js?v=7ae7f98bbffe';
+import {catalogPage,cartPage,mountCatalog,updateCartBadges,addFromDetail,cartItems,clearCart} from './catalog.js?v=7ae7f98bbffe';
+import sections from './sections.js?v=7ae7f98bbffe';
+import {mountMotion,toggleAccordion} from './motion.js?v=7ae7f98bbffe';
+import icons from './icons.js?v=7ae7f98bbffe';
 const icon=name=>icons[name]||'';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -54,7 +54,7 @@ const page=(title,body)=>`<section class="page-heading shell"><a href="/">Гла
 const homeInfo=()=>`<section class="home-info shell"><article id="delivery"><h2>Доставка</h2><p>Согласуем адрес, объём груза и сроки доставки. Способ перевозки подбирается под размеры и вес заказа.</p></article><article id="payment"><h2>Оплата</h2><p>Стоимость и условия оплаты согласуем перед оформлением заказа и зафиксируем в счёте.</p></article></section>`;
 const sectionRoute=path=>path.replace(/\/$/,'')==='/reviews'?'contact':path.startsWith('/services')?'services':({'/about':'about','/contact':'contact','/delivery-and-payment':'geography','/payment':'contact'})[path.replace(/\/$/,'')];
 function scrollSection(id){requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}));}
-function render(){trackPage();const destination=sectionRoute(location.pathname);if(destination)history.replaceState({},'','/#'+destination);disposeHero();disposeMap();const path=location.pathname.replace(/\/$/,'')||'/';dialog.close();if(path==='/')main.innerHTML=hero()+services()+geography()+about()+consultation();else if(path.startsWith('/catalog'))main.innerHTML=catalogPage();else if(path==='/cart')main.innerHTML=cartPage();else if(path==='/privacy')main.innerHTML=page('Политика конфиденциальности',privacyMarkup());else if(path==='/sitemap')main.innerHTML=page('Карта сайта',sitemapMarkup());else if(path==='/thanks')main.innerHTML=page('Спасибо за обращение',`<section class="shell section"><h2>Заявка отправлена</h2><p>Мы получили ваше сообщение</p><a class="button" href="/">На главную</a></section>`);else main.innerHTML=page('Страница не найдена','<section class="shell section"><a class="button" href="/">На главную</a></section>');init();disposeHero=mountHero();disposeMap=mountMap();applySeo(path);if(location.hash)scrollSection(decodeURIComponent(location.hash.slice(1)));}
+function render(){trackPage();const destination=sectionRoute(location.pathname);if(destination)history.replaceState({},'','/#'+destination);disposeHero();disposeMap();const path=location.pathname.replace(/\/$/,'')||'/';dialog.close();if(path==='/')main.innerHTML=hero()+services()+geography()+about()+consultation();else if(path.startsWith('/catalog')){const initial=main.querySelector('[data-initial-catalog]');if(initial)initial.removeAttribute('data-initial-catalog');else main.innerHTML=catalogPage();}else if(path==='/cart')main.innerHTML=cartPage();else if(path==='/privacy')main.innerHTML=page('Политика конфиденциальности',privacyMarkup());else if(path==='/sitemap')main.innerHTML=page('Карта сайта',sitemapMarkup());else if(path==='/thanks')main.innerHTML=page('Спасибо за обращение',`<section class="shell section"><h2>Заявка отправлена</h2><p>Мы получили ваше сообщение</p><a class="button" href="/">На главную</a></section>`);else main.innerHTML=page('Страница не найдена','<section class="shell section"><a class="button" href="/">На главную</a></section>');init();disposeHero=mountHero();disposeMap=mountMap();applySeo(path);if(location.hash)scrollSection(decodeURIComponent(location.hash.slice(1)));}
 function navigate(href){const url=new URL(href,location.origin);const id=sectionRoute(url.pathname)||url.hash.slice(1);if(url.hash&&url.pathname===location.pathname&&!sectionRoute(url.pathname)&&location.pathname!=='/'){history.pushState({},'',url.pathname+url.hash);dialog.close();scrollSection(url.hash.slice(1));return;}if(id){const onHome=location.pathname==='/';history.pushState({},'','/#'+id);dialog.close();if(!onHome)render();else scrollSection(id);return;}history.pushState({},'',href);render();window.scrollTo({top:0,behavior:'instant'});}
 function modal(title,body){opener=document.activeElement;dialog.innerHTML=`<button class="dialog-close" aria-label="Закрыть окно">${icon('x')}</button><h2>${esc(title)}</h2>${body}`;dialog.setAttribute('aria-label',title);dialog.showModal();initForms(dialog);$$('[data-icon]',dialog).forEach(e=>e.innerHTML=icon(e.dataset.icon));}
 function applyCity(value){currentCity=value;$$('[data-city-label]').forEach(x=>x.textContent=value||'Выбрать город');$$('input[name=city]').forEach(x=>{if(!x.dataset.edited)x.value=value;});}
