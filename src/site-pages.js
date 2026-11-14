@@ -1,4 +1,4 @@
-import {categories} from './catalog-categories.js?v=d59ad2518c06';
+import {categories} from './catalog-categories.js?v=a9e36c79426d';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
@@ -17,13 +17,13 @@ export const productPath = product => '/catalog/item/' + encodeURIComponent(prod
 export function relatedProductsMarkup(product, inventory) {
  const family = product.category.split('/')[0];
  const related = inventory.filter(item => item.id !== product.id && item.category.split('/')[0] === family)
-  .sort((a,b) => Number(b.category === product.category) - Number(a.category === product.category)).slice(0,4);
+  .sort((a,b) => Number(b.category === product.category) - Number(a.category === product.category));
  if (!related.length) return '';
  const cards = related.map(item => {
   const price = item.price === null ? 'Цена по запросу' : item.price.toLocaleString('ru-RU')+' ₽ / '+item.unit;
   return `<a class="related-item" href="${productPath(item)}"><img loading="lazy" src="${escapeHtml(item.image)}" alt=""><span>${escapeHtml(item.name)}</span><strong>${escapeHtml(price)}</strong></a>`;
  }).join('');
- return `<section class="sku-related"><h2>Похожие товары</h2><div class="related-grid">${cards}</div></section>`;
+ return `<section class="sku-related"><div class="related-heading"><h2>Похожие товары</h2><div class="related-controls"><button type="button" data-related-step="-1" aria-label="Предыдущие товары" aria-controls="related-track">←</button><button type="button" data-related-step="1" aria-label="Следующие товары" aria-controls="related-track">→</button></div></div><div id="related-track" tabindex="0" aria-label="Похожие товары" class="related-grid">${cards}</div></section>`;
 }
 export function productMeta(product) {
  const path = productPath(product);
