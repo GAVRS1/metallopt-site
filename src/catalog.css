@@ -61,3 +61,24 @@
 @media(min-width:601px) and (max-width:1200px){:not(.is-grid)>.catalog-product{grid-template-columns:44px 104px minmax(100px,1fr) 130px}}
 @media(max-width:600px){:not(.is-grid)>.catalog-product{grid-template-columns:44px clamp(84px,24vw,118px) minmax(0,1fr)}}
 :not(.is-grid)>.catalog-product .product-image{width:100%;height:auto;aspect-ratio:1}
+/* Product information stays prominent at every card width. */
+.catalog-product h3.product-name{font-size:clamp(18px,1.4vw,21px);line-height:1.25;overflow-wrap:anywhere}
+.catalog-product .product-stock{font-size:13px;line-height:1.4;margin-top:6px}
+.catalog-product .product-stock::before{margin:0}
+.catalog-product .product-info{min-width:0}
+.catalog-product .product-props dt{font-size:13px;line-height:1.35}
+.catalog-product .product-props dd{font-size:16px;line-height:1.35;font-weight:550;margin-top:2px;overflow-wrap:anywhere}
+.catalog-product .product-price{font-size:20px;line-height:1.25;font-variant-numeric:tabular-nums}
+.catalog-product .product-price small{font-size:13px}
+.is-grid .catalog-product .product-image{aspect-ratio:2/1;max-height:205px}
+.is-grid .catalog-product .product-info{width:100%;padding-top:4px}
+.is-grid .catalog-product .product-props{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(106px,100%),1fr));gap:10px 14px;border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+@media(max-width:600px){
+ .product-list:not(.is-grid)>.catalog-product{position:relative;grid-template-columns:clamp(86px,24vw,112px) minmax(0,1fr);grid-template-areas:"photo info" "price price" "actions actions";gap:12px;align-items:start}
+ .product-list:not(.is-grid) .product-image{grid-area:photo}
+ .product-list:not(.is-grid) .row-select{position:absolute;left:12px;top:18px;width:44px;height:44px}
+ .product-list:not(.is-grid) .product-info{grid-area:info}
+ .product-list:not(.is-grid) .product-price{grid-area:price}
+ .product-list:not(.is-grid) .product-order{grid-area:actions;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .product-list:not(.is-grid) .product-props{margin-top:10px;gap:7px 14px}
+}
