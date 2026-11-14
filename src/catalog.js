@@ -1,9 +1,9 @@
-import {price,props,image,productOrder,singleProductBody,productPageMarkup} from './product-page.js?v=180305820a46';
-import {catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=180305820a46';
-import {filterProducts} from './catalog-filter.js?v=180305820a46';
-export {filterProducts} from './catalog-filter.js?v=180305820a46';
-import {categories,products,loadCatalog} from './catalog-data.js?v=180305820a46';
-import icons from './icons.js?v=180305820a46';
+import {price,props,image,productOrder,singleProductBody,productPageMarkup} from './product-page.js?v=4daec0bc0628';
+import {catalogCopyFor,productPath,productMeta,productSchema} from './site-pages.js?v=4daec0bc0628';
+import {filterProducts} from './catalog-filter.js?v=4daec0bc0628';
+export {filterProducts} from './catalog-filter.js?v=4daec0bc0628';
+import {categories,products,loadCatalog} from './catalog-data.js?v=4daec0bc0628';
+import icons from './icons.js?v=4daec0bc0628';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n);
 let byId=new Map();

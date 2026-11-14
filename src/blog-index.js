@@ -577,6 +577,6 @@ export const blogEntries = [
  {
   "path": "/articles/metallobaza/",
   "title": "Металлобаза",
-  "image": ""
+  "image": "/assets/blog/metallobaza.webp"
  }
 ];

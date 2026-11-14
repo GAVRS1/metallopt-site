@@ -1,5 +1,5 @@
-import {blogEntries} from './blog-index.js?v=180305820a46';
-import {categories} from './catalog-categories.js?v=180305820a46';
+import {blogEntries} from './blog-index.js?v=4daec0bc0628';
+import {categories} from './catalog-categories.js?v=4daec0bc0628';
 export const siteOrigin='https://metalloptmsk.ru';
 export const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalogCopy={
