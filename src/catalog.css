@@ -154,3 +154,4 @@
 .sku-related .related-item{scroll-snap-align:start;font:normal 500 15px/1.35 var(--font-family)}
 .sku-related .related-item span,.sku-related .related-item strong{font-style:normal}
 @media(max-width:700px){.sku-layout{grid-template-columns:1fr;gap:16px}.sku-photo img{aspect-ratio:1.95}.sku-related .related-grid{grid-auto-columns:clamp(156px,43vw,245px);gap:10px}.catalog-page section.sku-related{margin-top:18px}}
+@media (scripting:enabled){.catalog-static-list{display:none} #catalog-app:has(.catalog-static-list){min-height:60vh}}
